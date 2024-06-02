@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="h_gate_test_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="h_gate_test" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="129.201 ns"></ZoomEndTime>
+      <Cursor1Time time="70.800 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="339"></NameColumnWidth>
+      <ValueColumnWidth column_width="165"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/h_gate_test/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/validin" type="logic">
+      <obj_property name="ElementShortName">validin</obj_property>
+      <obj_property name="ObjectShortName">validin</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/validout" type="logic">
+      <obj_property name="ElementShortName">validout</obj_property>
+      <obj_property name="ObjectShortName">validout</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/amplitude" type="array">
+      <obj_property name="ElementShortName">amplitude[255:0]</obj_property>
+      <obj_property name="ObjectShortName">amplitude[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/newamplitude" type="array">
+      <obj_property name="ElementShortName">newamplitude[255:0]</obj_property>
+      <obj_property name="ObjectShortName">newamplitude[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/n" type="array">
+      <obj_property name="ElementShortName">n[1:0]</obj_property>
+      <obj_property name="ObjectShortName">n[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/amp" type="array">
+      <obj_property name="ElementShortName">amp[3:0][63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp[3:0][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/newamp" type="array">
+      <obj_property name="ElementShortName">newamp[3:0][63:0]</obj_property>
+      <obj_property name="ObjectShortName">newamp[3:0][63:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/QULEN" type="array">
+      <obj_property name="ElementShortName">QULEN[31:0]</obj_property>
+      <obj_property name="ObjectShortName">QULEN[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/QUDEEP" type="array">
+      <obj_property name="ElementShortName">QUDEEP[31:0]</obj_property>
+      <obj_property name="ObjectShortName">QUDEEP[31:0]</obj_property>
+   </wvobject>
+</wave_config>

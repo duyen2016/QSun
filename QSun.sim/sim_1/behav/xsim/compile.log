@@ -1,0 +1,8 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/DoAn1/QSun/QSun.srcs/sources_1/new/add_sub_float32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module add_sub_float32
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/DoAn1/QSun/QSun.srcs/sources_1/new/h_gate.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_gate
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/DoAn1/QSun/QSun.srcs/sources_1/new/mult_float32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mult_float32
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/DoAn1/QSun/QSun.srcs/sim_1/new/h_gate_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_gate_test

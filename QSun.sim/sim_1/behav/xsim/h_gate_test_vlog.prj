@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../QSun.srcs/sources_1/new/add_sub_float32.v" \
+"../../../../QSun.srcs/sources_1/new/h_gate.v" \
+"../../../../QSun.srcs/sources_1/new/mult_float32.v" \
+"../../../../QSun.srcs/sim_1/new/h_gate_test.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
