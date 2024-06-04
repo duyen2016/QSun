@@ -25,36 +25,38 @@ module h_gate_test();
     parameter QUDEEP = 2**QULEN;
     reg clk, rst, validin;
     wire validout;
-    wire [64 * QUDEEP -1: 0] amplitude, newamplitude;
     reg [ QULEN - 1: 0] n;
-    reg [63:0] amp [ QUDEEP-1:0];
-    wire [63:0] newamp [ QUDEEP-1:0];
+    reg [63:0] amp;
+    wire [63:0] newamp;
     initial forever #5 clk = ~clk;
     genvar i;
     generate
-    for (i = 0; i< QUDEEP; i = i+1) begin
-        assign amplitude[ 64*(i+1)-1 : 64*i] = amp[i];
-        assign newamp[i] = newamplitude[ 64*(i+1)-1 : 64*i];
-    end
-    endgenerate
+
+endgenerate
     initial begin
-        clk = 1'b0;
-        amp[0] = 64'h3f80000000000000;
-        amp[1] = 0;
-        amp[2] = 0;
-        amp[3] = 0;
-        n = 0;
-        #5 rst = 1'b1;
-        #10 rst = 1'b0;
-        #15 validin = 1'b1;
-        #20 validin = 1'b0;
-    end
+    clk = 1'b0;
+    n = 0;
+    #5 rst = 1'b1;
+    #10 rst = 1'b0;
     
+    validin = 1'b1;
+    @(posedge clk)
+
+    amp = 64'h3f80000000000000;    
+    @(posedge clk)
+    amp = 64'h0;
+    @(posedge clk)    
+    amp = 64'h0;
+    @(posedge clk)    
+    amp = 64'h0;  
+    #2 validin = 1'b0;
+end
+
     h_gate #(.QULEN(2)) HGATE(
     .clk(clk), .rst(rst), .validin(validin),
-    .amplitude(amplitude),
+    .amplitude(amp),
     .n(n),
-    .newamplitude(newamplitude),
+    .newamplitude(newamp),
     .validout(validout)
-    );
+);
 endmodule
