@@ -25,37 +25,38 @@ module h_gate_test();
     parameter QUDEEP = 2**QULEN;
     reg clk, rst, validin;
     wire validout;
-    reg [ QULEN - 1: 0] n;
+    reg [ QULEN - 1: 0] n, control;
+    reg [31:0] theta;
     reg [63:0] amp;
     wire [63:0] newamp;
     initial forever #5 clk = ~clk;
-    genvar i;
-    generate
 
-endgenerate
     initial begin
     clk = 1'b0;
     n = 0;
+    control = 1;
+    theta = 32'h323d70a4;
     #5 rst = 1'b1;
-    #10 rst = 1'b0;
+    #15 rst = 1'b0;
     
+    @(posedge clk)
+
+    amp = 64'h4000000000000000;    
     validin = 1'b1;
     @(posedge clk)
-
-    amp = 64'h3f80000000000000;    
+    amp = 64'h4000000000000000;
+    @(posedge clk)    
+    amp = 64'h4000000000000000;
+    @(posedge clk)    
+    amp = 64'h0000000000000000;  
     @(posedge clk)
-    amp = 64'h0;
-    @(posedge clk)    
-    amp = 64'h0;
-    @(posedge clk)    
-    amp = 64'h0;  
-    #2 validin = 1'b0;
+    validin = 1'b0;
 end
 
-    h_gate #(.QULEN(2)) HGATE(
+    rx_gate #(.QULEN(2)) SGATE(
     .clk(clk), .rst(rst), .validin(validin),
     .amplitude(amp),
-    .n(n),
+    .theta(theta), .n(n),
     .newamplitude(newamp),
     .validout(validout)
 );
