@@ -31,13 +31,13 @@ module control #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
     reg [ QULEN-1:0] next_state, previous_state;
     wire [ QULEN-1:0] cut = 1<<( QULEN-n-1);
     wire [ QULEN-1:0] thres = QUDEEP-cut;
-    wire [ QULEN-1:0] pass = previous_state + 1;
+    wire [ QULEN-1:0] pass = previous_state + 1'b1;
     always @(state or rst or exe or readmem or validin or validout) begin
         if (rst) begin
             next_state = 0;
         end
         else if ((readmem) || (validin) || (validout)) begin
-            next_state = state + 1;
+            next_state = state + 1'b1;
         end
         else if (state ===  (QUDEEP - 1)) next_state = state;
         else if ((exe) && (state<=thres)) begin

@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 07/18/2024 07:25:59 AM
+// Create Date: 07/20/2024 10:01:08 PM
 // Design Name: 
-// Module Name: rx_gate
+// Module Name: ry_gate
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
+module ry_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
     input clk, rst, validin,
     input [63 : 0] amplitude,
     input [ QULEN - 1 : 0] n,
@@ -34,13 +34,13 @@ module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
     wire [ QULEN-1:0] state;
     reg [ QULEN-1:0] state_d1, addr_a, addr_b_temp;
     wire [31:0] costheta, sintheta, thetadiv2, store_real_0, store_imag_0, store_real_1, store_imag_1;
-    reg [63:0] A_CM_0, B_CM_0, A_CM_1, B_CM_1, A_AS_0, B_AS_0, A_AS_1, B_AS_1;
+    reg [63:0] A_CM_0, B_CM_0, A_CM_1, B_CM_1, A_AS_0, B_AS_1;
     wire [63:0] _real_0, _imag_0, _real_1, _imag_1;
     wire [ QULEN-1:0] cut = 1<<( QULEN-n-1);
         
     assign newamplitude = validout? newamp : 0;
     assign valid_done = validout & (~readmem);
-
+    
     blk_mem_gen_0 S_AMPMEM(
         .clka(clk),
         .ena((exe | validin)),
@@ -136,7 +136,7 @@ module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .S(store_real_0)
      );    
     
-    c_addsub_1 add_sub_real_1(
+    c_addsub_2 add_sub_real_1(
         .A(_real_0[60:29]),
         .B(B_AS_1[31:0]),
         .S(store_real_1)
@@ -148,7 +148,7 @@ module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .S(store_imag_0)
      );    
     
-    c_addsub_1 add_sub_imag_1(
+    c_addsub_2 add_sub_imag_1(
         .A(_imag_0[60:29]),
         .B(B_AS_1[63:32]),
         .S(store_imag_1)
@@ -160,6 +160,7 @@ module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             B_CM_0 <= 0;
             A_CM_1 <= 0;
             B_CM_1 <= 0;
+            
             A_AS_0 <= 0;
             B_AS_1 <= 0;
         end
@@ -168,14 +169,16 @@ module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             B_CM_0 <= 0;
             A_CM_1 <= 0;
             B_CM_1 <= 0;
+            
             A_AS_0 <= 0;
             B_AS_1 <= 0;
         end
         else if (exe) begin
             A_CM_0 <= {32'b0, costheta};
             B_CM_0 <= {amp[31:0], amp[63:32]};
-            A_CM_1 <= {sintheta, 32'b0};
+            A_CM_1 <= {32'b0, sintheta};
             B_CM_1 <= {amp[31:0], amp[63:32]};
+            
             A_AS_0 <= {_imag_0[60:29], _real_0[60:29]};
             B_AS_1 <= {_imag_1[60:29], _real_1[60:29]};
         end
@@ -184,6 +187,7 @@ module rx_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             B_CM_0 <= 0;
             A_CM_1 <= 0;
             B_CM_1 <= 0;
+            
             A_AS_0 <= 0;
             B_AS_1 <= 0;
         end

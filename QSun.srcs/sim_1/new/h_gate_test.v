@@ -44,16 +44,16 @@ module h_gate_test();
     amp = 64'h4000000000000000;    
     validin = 1'b1;
     @(posedge clk)
-    amp = 64'h4000000000000000;
+    amp = 64'h0000000000000000;
     @(posedge clk)    
-    amp = 64'h4000000000000000;
+    amp = 64'h0000000000000000;
     @(posedge clk)    
     amp = 64'h0000000000000000;  
     @(posedge clk)
     validin = 1'b0;
 end
 
-    rx_gate #(.QULEN(2)) SGATE(
+    rz_gate #(.QULEN(2)) SGATE(
     .clk(clk), .rst(rst), .validin(validin),
     .amplitude(amp),
     .theta(theta), .n(n),
