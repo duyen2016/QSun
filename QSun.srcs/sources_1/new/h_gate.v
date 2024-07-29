@@ -20,117 +20,50 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module h_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
+module h_gate #(parameter QULEN = 18, QUDEEP = 2**QULEN)(
     input clk, rst, validin,
     input [63 : 0] amplitude,
     input [ QULEN - 1 : 0] n,
     output [63 : 0] newamplitude,
     output reg validout
 );
-    parameter [31:0] inverse_sqrt_2 = 32'h3f3504f3;
+    parameter [31:0] inverse_sqrt_2 = 32'h2d413ccd;
     wire [63:0] amp;
-    wire [63:0] newamp;
+    wire [63:0] newamp, _real_0, _imag_0;
     wire [ QULEN-1 : 0] state;
     wire [ QULEN-1 : 0] cut = 1<<( QULEN-n-1);
-    reg [ QULEN-1 : 0] state_d1, state_d2, state_d3, state_d4;
-    wire exe, readmem, validout_d1, write;
-    assign newamplitude = (validout) ? tempamp : 0;
+    reg [ QULEN-1 : 0] state_d1;
+    wire exe, readmem, write, cm0_out, valid_done;
+    reg [63:0] A_CM_0, B_CM_0, A_AS_0;
+    wire [31:0] store_real_0, store_imag_0, store_real_1, store_imag_1;
+    reg [QULEN-1:0] addr_a, addr_b_temp;
+    wire [63:0] tempamp_cut;    
+    
+    assign newamplitude = (validout) ? newamp : 0;
+    assign valid_done = validout & (~readmem);
+    
     blk_mem_gen_0 AMPMEM(
         .clka(clk),
         .ena((exe | validin)),
         .wea(validin),
-        .addra({{2'b0},state}),
+        .addra(state),
         .dina(amplitude),
         .douta(amp)
     );
-    wire [31:0] sreal_0, simag_0, sreal_1, simag_1;
-    reg [QULEN-1:0] addr_a, addr_b, addr_b_temp, addr_a_new;
-    wire [63:0] newamp_cut, tempamp, tempamp_cut;
+
     blk_mem_gen_1 TEMPAMPMEM(
         .clka(clk),
-        .ena((exe && (state[ QULEN-n-1] === 1'b1)) | readmem | validout),
-        .wea(exe && (state_d1[ QULEN-n-1] === 1'b0)),
-        .addra({{2'b0},addr_a}),
-        .dina({ sreal_0, simag_0}),
-        .douta(tempamp),
-        .clkb(clk),
-        .enb(exe),
-        .web(exe && (state_d1[ QULEN-n-1] === 1'b0)),
-        .addrb({{2'b0},addr_b_temp}),
-        .dinb({ sreal_1, simag_1}),
-        .doutb(tempamp_cut));
-    blk_mem_gen_1 NEWAMPMEM(
-        .clka(clk),
-        .ena((exe && (state[ QULEN-n-1] === 1'b1)) | readmem | validout),
-        .wea((!write) && exe && (state_d1[ QULEN-n-1] == 1'b1)),
-        .addra({{2'b0},addr_a_new}),
-        .dina({ sreal_0, simag_0}),
+        .ena(exe | readmem | validout),
+        .wea(write),
+        .addra(addr_a),
+        .dina({ store_real_1, store_imag_1}),
         .douta(newamp),
         .clkb(clk),
-        .enb(((exe && (state[ QULEN-n-1] === 1'b1)) | readmem | validout)),
-        .web((!write) && exe && (state_d1[ QULEN-n-1] == 1'b1)),
-        .addrb({{2'b0},addr_b}),
-        .dinb({ sreal_1, simag_1}),
-        .doutb(newamp_cut)
-    );
-    //    always @(posedge clk) begin
-    //        state <= state_n;
-    //        exe <= exe_n;
-    //        validout <= validout_n;
-    //    end
-    /*
-    always @(posedge clk) begin
-        if (rst) begin
-            state <= 0;
-            readmem <= 1'b0;
-            exe <= 1'b0;
-            write <= 1'b0;
-        end
-        else if ((exe) && (state_d1 === state) && (state_d1 === (QUDEEP-1))) begin
-            readmem <= 1'b1;
-            state <= 0;
-            exe <= 1'b0;
-            write <= 1'b0;
-        end
-        else if ((!exe) && (!readmem) && (state_d1 === (QUDEEP-1))) begin
-            state <= 0;
-            readmem <= 1'b0;
-            exe <= 1'b1;
-            write <= 1'b0;
-        end
-        else if ((state != QUDEEP - 1) && (validin)) begin
-            state <= state + 1;
-            readmem <= 1'b0;
-            exe <= exe;
-            write <= 1'b0;
-        end        
-        else if ((state != QUDEEP - 1) && (exe)) begin
-            if ((!write) && (state == (QUDEEP >> 1))) begin
-                state <= state;
-                write <= 1'b1;
-            end         
-            else begin
-                state <= state + 1;
-                write <= 1'b0;
-            end
-            readmem <= 1'b0;
-            exe <= exe;
-        end          
-        else if (readmem) begin
-            if (state < QUDEEP-1) state <= state + 1;
-            else state <= state;
-            if (state == QUDEEP-1) readmem <= 1'b0;
-            else readmem <= 1'b1;
-            exe <= 1'b0;
-            write <= 1'b0;
-        end
-        else begin
-            state <= state;
-            readmem <= 1'b0;
-            exe <= exe;
-            write <= 1'b0;
-        end
-    end */
+        .enb(exe),
+        .web(write),
+        .addrb(addr_b_temp),
+        .dinb({ store_real_0, store_imag_0}),
+        .doutb(tempamp_cut));
     
     control #(.QULEN(QULEN), .QUDEEP(QUDEEP)) CONTROL (
         .clk(clk), 
@@ -144,25 +77,52 @@ module h_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .validout(validout), 
         .write(write)    
     );
-    reg [ QULEN-1:0] next_state, previous_state;
-    wire [ QULEN-1:0] cut = 1<<( QULEN-n-1);
-    wire [ QULEN-1:0] thres = QUDEEP-cut; 
-    wire [31:0] p_real, p_imag;
-    reg [31:0] min_real, min_imag, asin_real_0, asin_imag_0, asin_real_1, asin_imag_1;
-    reg add;
-    always @(state_d1 or state) begin
-        if (readmem) begin
-            addr_b = state - cut;
-            addr_a_new = state;
+    
+    cmpy_0 COMPLEX_MUL_0 (
+        .s_axis_a_tvalid(exe), ///{imag[32], real[32]}
+        .s_axis_a_tdata(A_CM_0),
+        .s_axis_b_tvalid(exe),
+        .s_axis_b_tdata(B_CM_0),
+        .m_axis_dout_tvalid(cm0_out), ///{64 imag, 64 real}
+        .m_axis_dout_tdata({_imag_0, _real_0})
+    );
+   
+    c_addsub_1 add_sub_real_0( //subtract
+        .A(A_AS_0[31:0]),
+        .B(_real_0[60:29]),
+        .S(store_real_1)
+     );    
+    
+    c_addsub_2 add_sub_real_1( //add
+        .A(A_AS_0[31:0]),
+        .B(_real_0[60:29]),
+        .S(store_real_0)
+     );  
+
+    c_addsub_1 add_sub_imag_0(
+        .A(A_AS_0[63:32]),
+        .B(_imag_0[60:29]),
+        .S(store_imag_1)
+     );    
+    
+    c_addsub_2 add_sub_imag_1(
+        .A(A_AS_0[63:32]),
+        .B(_imag_0[60:29]),
+        .S(store_imag_0)
+     );  
+              
+    always @(state_d1 or state or rst or valid_done) begin
+        if (rst) begin 
+            addr_a = 0;
+            addr_b_temp = 0;
         end
-        else begin
-            addr_b = state_d1 - cut;
-            addr_a_new = state_d1;
+        else if (valid_done) begin
+            addr_a = 0;
+            addr_b_temp = 0;
         end
-    end         
-    always @(state_d1, state) begin
-        if (readmem) begin
-            addr_a = state;
+        else if (readmem) begin
+            addr_a = state_d1;
+            addr_b_temp = 0;
         end
         else if (state_d1[ QULEN-n-1] == 1'b1) begin
             addr_b_temp = state_d1 + cut;
@@ -172,94 +132,43 @@ module h_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             addr_b_temp = state - cut;
             addr_a = state;
         end
-        
     end
-    always @(negedge clk) begin
-        if (exe) begin
-            if (state_d1[ QULEN-n-1] == 1'b0) begin
-                //                newamp[ state] <= newamp[ state] + amp[ state] * 0.707;
-                //                newamp[ state + cut] <= newamp[ state + cut] + amp[ state] * 0.707; 
-                min_real <= amp[63:32];
-                min_imag <= amp[31:0];
-                asin_real_0 <= 0;
-                asin_imag_0 <= 0;
-                asin_real_1 <= 0;
-                asin_imag_1 <= 0;
-                add <= 1'b1;
-            end
-            else if ( state_d1[ QULEN-n-1] == 1'b1) begin
-                //                newamp[ state] <= newamp[ state] - amp[ state] * 0.707; 
-                //                newamp[ state - cut] <= newamp[ state - cut] + amp[ state] * 0.707;
-                min_real <= amp[63:32];
-                min_imag <= amp[31:0];
-                asin_real_0 <= sreal_1; //tempamp[63:32];
-                asin_imag_0 <= simag_1; //tempamp[31:0];
-                asin_real_1 <= sreal_0;//tempamp_cut[63:32];
-                asin_imag_1 <= simag_0;//tempamp_cut[31:0];
-                add <= 1'b0;
-            end
-            else begin 
-                min_real <= 0;
-                min_imag <= 0;
-                asin_real_0 <= newamp[63:32];
-                asin_imag_0 <= newamp[31:0];
-                asin_real_1 <= newamp_cut[63:32];
-                asin_imag_1 <= newamp_cut[31:0];
-                add <= 1'b0;
-            end
+    
+    always @(negedge clk or posedge rst) begin
+        if (rst) begin
+            A_CM_0 <= 0;
+            B_CM_0 <= 0; 
+            A_AS_0 <= 0;
+        end
+        else if (valid_done) begin
+            A_CM_0 <= 0;
+            B_CM_0 <= 0; 
+            A_AS_0 <= 0;
+        end
+        else if (exe) begin
+            A_CM_0 <= {amp[31:0], amp[63:32]};
+            B_CM_0 <= {32'b0, inverse_sqrt_2}; //inverse square root
+            A_AS_0 <= {_imag_0[60:29], _real_0[60:29]};
         end
         else begin
-            min_real <= 0;
-            min_imag <= 0;
-            asin_real_0 <= newamp[63:32];
-            asin_imag_0 <= newamp[31:0];
-            asin_real_1 <= newamp_cut[63:32];
-            asin_imag_1 <= newamp_cut[31:0];
-            add <= 1'b0;
+            A_CM_0 <= 0;
+            B_CM_0 <= 0; 
+            A_AS_0 <= 0;
         end
     end
-    always @(posedge clk) begin
-        state_d1 <= state;
-        state_d2 <= state_d1;
-        state_d3 <= state_d2;
-        state_d4 <= state_d3;
-        validout <= readmem;
-//        validout <= validout_d1;
+    
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state_d1 <= 0;
+            validout <= 0;
+        end
+        else if (valid_done) begin
+            state_d1 <= 0;
+            validout <= 0;
+        end
+        else begin
+            state_d1 <= state;
+            validout <= readmem;
+        end
     end
-    mult_float32 mult_real(
-        .clk(clk),
-        .a(min_real), .b(inverse_sqrt_2),
-        .p(p_real)
-    );
-
-    mult_float32 mult2_imag(
-        .clk(clk),
-        .a(min_imag), .b(inverse_sqrt_2),
-        .p(p_imag)
-    );
-
-
-    add_sub_float32 add_sub_real_0(
-        .clk(clk), .add(add),
-        .a(asin_real_0), .b(p_real),
-        .s(sreal_0)
-    );
-
-    add_sub_float32 add_sub_imag_0(
-        .clk(clk), .add(add),
-        .a(asin_imag_0), .b(p_imag),
-        .s(simag_0)
-    );
-
-    add_sub_float32 add_sub_real_1(
-        .clk(clk), .add(1'b1),
-        .a(asin_real_1), .b(p_real),
-        .s(sreal_1)
-    );
-
-    add_sub_float32 add_sub_imag_1(
-        .clk(clk), .add(1'b1),
-        .a(asin_imag_1), .b(p_imag),
-        .s(simag_1)
-    );
 endmodule

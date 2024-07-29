@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module ry_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
+module ry_gate #(parameter QULEN = 18, QUDEEP = 2**QULEN)(
     input clk, rst, validin,
     input [63 : 0] amplitude,
     input [ QULEN - 1 : 0] n,
@@ -45,7 +45,7 @@ module ry_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .clka(clk),
         .ena((exe | validin)),
         .wea(validin),
-        .addra({{2'b0},state}),
+        .addra(state),
         .dina(amplitude),
         .douta(amp)
     );    
@@ -54,13 +54,13 @@ module ry_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .clka(clk),
         .ena(exe | readmem | validout),
         .wea(write),
-        .addra({{2'b0},addr_a}),
+        .addra(addr_a),
         .dina({ store_real_1, store_imag_1}),
         .douta(newamp),
         .clkb(clk),
         .enb(exe),
         .web(write),
-        .addrb({{2'b0},addr_b_temp}),
+        .addrb(addr_b_temp),
         .dinb({ store_real_0, store_imag_0}),
         .doutb(newamp_cut)
     );
@@ -75,7 +75,7 @@ module ry_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             addr_b_temp = 0;
         end
         else if (readmem) begin
-            addr_a = state;
+            addr_a = state_d1;
             addr_b_temp = 0;
         end
         else if (state_d1[ QULEN-n-1] == 1'b1) begin

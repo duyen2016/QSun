@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module rz_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
+module rz_gate #(parameter QULEN = 18, QUDEEP = 2**QULEN)(
     input clk, rst, validin,
     input [63 : 0] amplitude,
     input [ QULEN - 1 : 0] n,
@@ -45,7 +45,7 @@ module rz_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .clka(clk),
         .ena((exe | validin)),
         .wea(validin),
-        .addra({{2'b0},state}),
+        .addra(state),
         .dina(amplitude),
         .douta(amp)
     );    
@@ -54,7 +54,7 @@ module rz_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
         .clka(clk),
         .ena(exe | readmem | validout),
         .wea(exe),
-        .addra({{2'b0},addr}),
+        .addra(addr),
         .dina({_real_0[60:29], _imag_0[60:29]}),
         .douta(newamp)
     );
@@ -67,6 +67,9 @@ module rz_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             addr = 0;
         end 
         else if (exe) begin
+            addr = state_d1;
+        end
+        else if (readmem) begin
             addr = state_d1;
         end
         else begin 
@@ -137,7 +140,7 @@ module rz_gate #(parameter QULEN = 2, QUDEEP = 2**QULEN)(
             state_d1 <= 0;
             validout <= 0;
         end
-        else if (validout) begin
+        else if (valid_done) begin
             state_d1 <= 0;
             validout <= 0;
         end
