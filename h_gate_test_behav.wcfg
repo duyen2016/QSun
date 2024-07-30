@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="129.201 ns"></ZoomEndTime>
-      <Cursor1Time time="70.800 ns"></Cursor1Time>
+      <ZoomStartTime time="33,423,598.250 ns"></ZoomStartTime>
+      <ZoomEndTime time="33,423,642.351 ns"></ZoomEndTime>
+      <Cursor1Time time="33,423,630.450 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="339"></NameColumnWidth>
-      <ValueColumnWidth column_width="165"></ValueColumnWidth>
+      <NameColumnWidth column_width="160"></NameColumnWidth>
+      <ValueColumnWidth column_width="228"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="39" />
    <wvobject fp_name="/h_gate_test/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -36,33 +36,144 @@
       <obj_property name="ElementShortName">validout</obj_property>
       <obj_property name="ObjectShortName">validout</obj_property>
    </wvobject>
-   <wvobject fp_name="/h_gate_test/amplitude" type="array">
-      <obj_property name="ElementShortName">amplitude[255:0]</obj_property>
-      <obj_property name="ObjectShortName">amplitude[255:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/h_gate_test/newamplitude" type="array">
-      <obj_property name="ElementShortName">newamplitude[255:0]</obj_property>
-      <obj_property name="ObjectShortName">newamplitude[255:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/h_gate_test/n" type="array">
-      <obj_property name="ElementShortName">n[1:0]</obj_property>
-      <obj_property name="ObjectShortName">n[1:0]</obj_property>
+      <obj_property name="ElementShortName">n[17:0]</obj_property>
+      <obj_property name="ObjectShortName">n[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/control" type="array">
+      <obj_property name="ElementShortName">control[17:0]</obj_property>
+      <obj_property name="ObjectShortName">control[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/theta" type="array">
+      <obj_property name="ElementShortName">theta[31:0]</obj_property>
+      <obj_property name="ObjectShortName">theta[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/h_gate_test/amp" type="array">
-      <obj_property name="ElementShortName">amp[3:0][63:0]</obj_property>
-      <obj_property name="ObjectShortName">amp[3:0][63:0]</obj_property>
+      <obj_property name="ElementShortName">amp[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp[63:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/h_gate_test/newamp" type="array">
-      <obj_property name="ElementShortName">newamp[3:0][63:0]</obj_property>
-      <obj_property name="ObjectShortName">newamp[3:0][63:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
+      <obj_property name="ElementShortName">newamp[63:0]</obj_property>
+      <obj_property name="ObjectShortName">newamp[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/h_gate_test/QULEN" type="array">
-      <obj_property name="ElementShortName">QULEN[31:0]</obj_property>
-      <obj_property name="ObjectShortName">QULEN[31:0]</obj_property>
+   <wvobject fp_name="/h_gate_test/validout_g1" type="logic">
+      <obj_property name="ElementShortName">validout_g1</obj_property>
+      <obj_property name="ObjectShortName">validout_g1</obj_property>
    </wvobject>
-   <wvobject fp_name="/h_gate_test/QUDEEP" type="array">
-      <obj_property name="ElementShortName">QUDEEP[31:0]</obj_property>
-      <obj_property name="ObjectShortName">QUDEEP[31:0]</obj_property>
+   <wvobject fp_name="/h_gate_test/amp_g1" type="array">
+      <obj_property name="ElementShortName">amp_g1[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_g1[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/validout_g2" type="logic">
+      <obj_property name="ElementShortName">validout_g2</obj_property>
+      <obj_property name="ObjectShortName">validout_g2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/amp_g2" type="array">
+      <obj_property name="ElementShortName">amp_g2[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_g2[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/validout_g3" type="logic">
+      <obj_property name="ElementShortName">validout_g3</obj_property>
+      <obj_property name="ObjectShortName">validout_g3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/amp_g3" type="array">
+      <obj_property name="ElementShortName">amp_g3[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_g3[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/validout_g4" type="logic">
+      <obj_property name="ElementShortName">validout_g4</obj_property>
+      <obj_property name="ObjectShortName">validout_g4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/amp_g4" type="array">
+      <obj_property name="ElementShortName">amp_g4[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_g4[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/validout_g5" type="logic">
+      <obj_property name="ElementShortName">validout_g5</obj_property>
+      <obj_property name="ObjectShortName">validout_g5</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/amp_g5" type="array">
+      <obj_property name="ElementShortName">amp_g5[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_g5[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/validin" type="logic">
+      <obj_property name="ElementShortName">validin</obj_property>
+      <obj_property name="ObjectShortName">validin</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/amplitude" type="array">
+      <obj_property name="ElementShortName">amplitude[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amplitude[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/control" type="array">
+      <obj_property name="ElementShortName">control[17:0]</obj_property>
+      <obj_property name="ObjectShortName">control[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/n" type="array">
+      <obj_property name="ElementShortName">n[17:0]</obj_property>
+      <obj_property name="ObjectShortName">n[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/newamplitude" type="array">
+      <obj_property name="ElementShortName">newamplitude[63:0]</obj_property>
+      <obj_property name="ObjectShortName">newamplitude[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/validout" type="logic">
+      <obj_property name="ElementShortName">validout</obj_property>
+      <obj_property name="ObjectShortName">validout</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/exe" type="logic">
+      <obj_property name="ElementShortName">exe</obj_property>
+      <obj_property name="ObjectShortName">exe</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/readmem" type="logic">
+      <obj_property name="ElementShortName">readmem</obj_property>
+      <obj_property name="ObjectShortName">readmem</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/valid_done" type="logic">
+      <obj_property name="ElementShortName">valid_done</obj_property>
+      <obj_property name="ObjectShortName">valid_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/_real" type="array">
+      <obj_property name="ElementShortName">_real[31:0]</obj_property>
+      <obj_property name="ObjectShortName">_real[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/_imag" type="array">
+      <obj_property name="ElementShortName">_imag[31:0]</obj_property>
+      <obj_property name="ObjectShortName">_imag[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/amp" type="array">
+      <obj_property name="ElementShortName">amp[63:0]</obj_property>
+      <obj_property name="ObjectShortName">amp[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/newamp" type="array">
+      <obj_property name="ElementShortName">newamp[63:0]</obj_property>
+      <obj_property name="ObjectShortName">newamp[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/state" type="array">
+      <obj_property name="ElementShortName">state[17:0]</obj_property>
+      <obj_property name="ObjectShortName">state[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/cut" type="array">
+      <obj_property name="ElementShortName">cut[17:0]</obj_property>
+      <obj_property name="ObjectShortName">cut[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/state_d1" type="array">
+      <obj_property name="ElementShortName">state_d1[17:0]</obj_property>
+      <obj_property name="ObjectShortName">state_d1[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/addr" type="array">
+      <obj_property name="ElementShortName">addr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/h_gate_test/CXGATE/write" type="logic">
+      <obj_property name="ElementShortName">write</obj_property>
+      <obj_property name="ObjectShortName">write</obj_property>
    </wvobject>
 </wave_config>

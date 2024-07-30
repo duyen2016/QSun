@@ -1,8 +1,14 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  \
-"../../../../QSun.srcs/sources_1/new/add_sub_float32.v" \
+"../../../../QSun.gen/sources_1/ip/blk_mem_gen_1/sim/blk_mem_gen_1.v" \
+"../../../../QSun.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" \
+"../../../../QSun.srcs/sources_1/new/control.v" \
+"../../../../QSun.srcs/sources_1/new/cx_gate.v" \
 "../../../../QSun.srcs/sources_1/new/h_gate.v" \
-"../../../../QSun.srcs/sources_1/new/mult_float32.v" \
+"../../../../QSun.srcs/sources_1/new/rx_gate.v" \
+"../../../../QSun.srcs/sources_1/new/ry_gate.v" \
+"../../../../QSun.srcs/sources_1/new/rz_gate.v" \
+"../../../../QSun.srcs/sources_1/new/s_gate.v" \
 "../../../../QSun.srcs/sim_1/new/h_gate_test.v" \
 
 # compile glbl module
